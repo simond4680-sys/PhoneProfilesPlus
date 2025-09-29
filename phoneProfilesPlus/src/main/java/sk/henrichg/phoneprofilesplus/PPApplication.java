@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.work.WorkManager;
 
+import com.github.anrwatchdog.ANRError;
 import com.github.anrwatchdog.ANRWatchDog;
 
 import org.acra.ACRA;
@@ -1321,7 +1322,9 @@ public class PPApplication extends Application
 
         // Handle the ANR error
         // This disables displaying of ANR dialog by system
-        new ANRWatchDog().setANRListener(error -> {
+        ANRWatchDog watchDog = new ANRWatchDog();
+        watchDog.setReportMainThreadOnly();
+        watchDog.setANRListener(error -> {
             //PPApplicationStatic.logE("[ANRWatchDog]", Log.getStackTraceString(error));
             PPApplicationStatic.logException("[ANRWatchDog]", Log.getStackTraceString(error), true);
 
